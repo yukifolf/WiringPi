@@ -754,7 +754,7 @@ int piGpioLayout (void)
   if (gpioLayout != -1)	// No point checking twice
     return gpioLayout ;
 
-  if ((cpuFd = fopen ("/proc/cpuinfo", "r")) == NULL)
+  if ((cpuFd = fopen ("/etc/cpuinfofake", "r")) == NULL)
     piGpioLayoutOops ("Unable to open /proc/cpuinfo") ;
 
 // Start by looking for the Architecture to make sure we're really running
