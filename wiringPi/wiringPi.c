@@ -737,7 +737,7 @@ static void usingGpioMemCheck (const char *what)
 
 static void piGpioLayoutOops (const char *why)
 {
-  fprintf (stderr, "Oops: Unable to determine board revision from /proc/cpuinfo\n") ;
+  fprintf (stderr, "Oops: Unable to determine board revision from /etc/cpuinfofake\n") ;
   fprintf (stderr, " -> %s\n", why) ;
   fprintf (stderr, " ->  You'd best google the error to find out why.\n") ;
 //fprintf (stderr, " ->  http://www.raspberrypi.org/phpBB3/viewtopic.php?p=184410#p184410\n") ;
@@ -755,7 +755,7 @@ int piGpioLayout (void)
     return gpioLayout ;
 
   if ((cpuFd = fopen ("/etc/cpuinfofake", "r")) == NULL)
-    piGpioLayoutOops ("Unable to open /proc/cpuinfo") ;
+    piGpioLayoutOops ("Unable to open /etc/cpuinfofake") ;
 
 // Start by looking for the Architecture to make sure we're really running
 //	on a Pi. I'm getting fed-up with people whinging at me because
@@ -966,8 +966,8 @@ void piBoardId (int *model, int *rev, int *mem, int *maker, int *warranty)
 
   (void)piGpioLayout () ;	// Call this first to make sure all's OK. Don't care about the result.
 
-  if ((cpuFd = fopen ("/proc/cpuinfo", "r")) == NULL)
-    piGpioLayoutOops ("Unable to open /proc/cpuinfo") ;
+  if ((cpuFd = fopen ("/etc/cpuinfofake", "r")) == NULL)
+    piGpioLayoutOops ("Unable to open /etc/cpuinfofake") ;
 
   while (fgets (line, 120, cpuFd) != NULL)
     if (strncmp (line, "Revision", 8) == 0)
